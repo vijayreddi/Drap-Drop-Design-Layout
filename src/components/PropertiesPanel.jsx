@@ -5,7 +5,7 @@ import React from 'react';
  * - If selected element: show type-specific controls
  * - Otherwise show canvas background control
  */
-export default function PropertiesPanel({ selected, updateElement, removeElement, canvasBg, setCanvasBg, mode }) {
+const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, setCanvasBg, mode }) => {
   if (!selected) {
     return (
       <div className="properties">
@@ -130,4 +130,6 @@ export default function PropertiesPanel({ selected, updateElement, removeElement
       )}
     </div>
   );
-}
+};
+
+export default PropertiesPanel;

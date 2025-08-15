@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
  * MVP Toolbar: Add text, image, button only
  * props: onAdd(type, payload)
  */
-export default function Toolbar({ onAdd }){
+const Toolbar = ({ onAdd }) => {
   const fileRef = useRef();
 
   const addText = () => onAdd('text', { 
@@ -67,4 +67,6 @@ export default function Toolbar({ onAdd }){
       </div>
     </div>
   );
-}
+};
+
+export default Toolbar;

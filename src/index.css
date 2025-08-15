@@ -13,7 +13,15 @@
 }
 
 * { box-sizing: border-box; }
-html,body,#root { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+html,body,#root { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  direction: ltr;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 .app {
   height: 100vh;
@@ -309,11 +317,15 @@ html,body,#root { height: 100%; margin: 0; font-family: Inter, system-ui, -apple
   user-select: text;
   -webkit-user-select: text;
   transition: all 0.2s ease;
+  direction: ltr;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  unicode-bidi: normal;
 }
 
 .element.selected {
-  outline: 2px solid var(--primary);
-  border-radius: 4px;
+  /* Selection border handled by JavaScript for better drag experience */
 }
 
 .element:hover {

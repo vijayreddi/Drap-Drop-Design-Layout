@@ -3,14 +3,12 @@ import Toolbar from './components/Toolbar';
 import Canvas from './components/Canvas';
 import PropertiesPanel from './components/PropertiesPanel';
 
-/**
- * Simple id generator for MVP
- */
+
 const id = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
 
-const initialElements = []; // start empty
+const initialElements = []; 
 
-export default function App(){
+const App = () => {
   const [elements, setElements] = useState(() => {
     try {
       const raw = localStorage.getItem('wysiwyg:elements');
@@ -126,4 +124,6 @@ export default function App(){
       </div>
     </div>
   );
-}
+};
+
+export default App;
