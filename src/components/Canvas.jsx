@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import Element from './Element';
 
 /**
- * Enhanced Canvas renders all elements and manages drag position updates
+ * MVP Canvas renders elements and manages drag position updates
  * Custom drag implementation compatible with React 19
  */
-export default function Canvas({ elements, setElements, updateElement, selectedId, setSelectedId, mode, canvasBg, canvasSize, setCanvasSize, duplicateElement }) {
+export default function Canvas({ elements, setElements, updateElement, selectedId, setSelectedId, mode, canvasBg }) {
   const [dragging, setDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragElement, setDragElement] = useState(null);
@@ -39,8 +39,8 @@ export default function Canvas({ elements, setElements, updateElement, selectedI
     const snappedY = Math.round(newY / gridSize) * gridSize;
     
     // Keep element within canvas bounds
-    const maxX = canvasSize.width - (dragElement.width || 100);
-    const maxY = canvasSize.height - (dragElement.height || 50);
+    const maxX = 900 - (dragElement.width || 100);
+    const maxY = 640 - (dragElement.height || 50);
     
     const boundedX = Math.max(0, Math.min(snappedX, maxX));
     const boundedY = Math.max(0, Math.min(snappedY, maxY));
@@ -60,33 +60,15 @@ export default function Canvas({ elements, setElements, updateElement, selectedI
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Delete' && selectedId) {
-      const element = elements.find(el => el.id === selectedId);
-      if (element) {
-        const index = elements.indexOf(element);
-        setElements(prev => prev.filter(el => el.id !== selectedId));
-        setSelectedId(null);
-      }
-    }
-    
-    if (e.key === 'd' && e.ctrlKey && selectedId) {
-      e.preventDefault();
-      duplicateElement(selectedId);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
     
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
-  }, [selectedId, elements, dragging, dragElement, dragOffset, mode, canvasSize.width, canvasSize.height]);
+  }, [dragging, dragElement, dragOffset, mode]);
 
   return (
     <div className="canvas-container">
@@ -95,8 +77,8 @@ export default function Canvas({ elements, setElements, updateElement, selectedI
         className="canvas" 
         style={{ 
           backgroundColor: canvasBg,
-          width: canvasSize.width,
-          height: canvasSize.height,
+          width: 900,
+          height: 640,
           position: 'relative',
           border: mode === 'design' ? '2px dashed #ccc' : '1px solid #e5e7eb',
           borderRadius: '8px',
@@ -195,26 +177,6 @@ export default function Canvas({ elements, setElements, updateElement, selectedI
           </div>
         )}
       </div>
-
-      {/* Canvas size indicator */}
-      {mode === 'design' && (
-        <div 
-          className="canvas-info"
-          style={{
-            position: 'absolute',
-            bottom: '-30px',
-            right: '0',
-            fontSize: '12px',
-            color: '#6b7280',
-            backgroundColor: '#f9fafb',
-            padding: '4px 8px',
-            borderRadius: '4px',
-            border: '1px solid #e5e7eb'
-          }}
-        >
-          {canvasSize.width} × {canvasSize.height}px
-        </div>
-      )}
     </div>
   );
 }
