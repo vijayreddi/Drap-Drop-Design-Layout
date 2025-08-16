@@ -1,4 +1,10 @@
 import React from 'react';
+import { 
+  FONT_FAMILIES, 
+  FONT_WEIGHTS, 
+  TEXT_ALIGNMENTS, 
+  DEFAULTS 
+} from '../utils/constants';
 
 /**
  * MVP Properties panel with basic styling options
@@ -48,40 +54,28 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
             <div className="property-group">
               <label>Font family</label>
               <select 
-                value={selected.style?.fontFamily || 'inherit'} 
+                value={selected.style?.fontFamily || DEFAULTS.FONT_FAMILY} 
                 onChange={(e)=>updateStyle({ fontFamily: e.target.value })}
               >
-                <option value="inherit">System Default</option>
-                <option value="Arial, sans-serif">Arial</option>
-                <option value="Helvetica, sans-serif">Helvetica</option>
-                <option value="Georgia, serif">Georgia</option>
-                <option value="Times New Roman, serif">Times New Roman</option>
-                <option value="Verdana, sans-serif">Verdana</option>
-                <option value="Courier New, monospace">Courier New</option>
-                <option value="Impact, sans-serif">Impact</option>
-                <option value="Comic Sans MS, cursive">Comic Sans MS</option>
-                <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
-                <option value="Lucida Console, monospace">Lucida Console</option>
+                {FONT_FAMILIES.map(font => (
+                  <option key={font.value} value={font.value}>
+                    {font.label}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="property-group">
               <label>Font weight</label>
               <select 
-                value={selected.style?.fontWeight || 'normal'} 
+                value={selected.style?.fontWeight || DEFAULTS.FONT_WEIGHT} 
                 onChange={(e)=>updateStyle({ fontWeight: e.target.value })}
               >
-                <option value="normal">Normal (400)</option>
-                <option value="bold">Bold (700)</option>
-                <option value="100">Thin (100)</option>
-                <option value="200">Extra Light (200)</option>
-                <option value="300">Light (300)</option>
-                <option value="400">Regular (400)</option>
-                <option value="500">Medium (500)</option>
-                <option value="600">Semi Bold (600)</option>
-                <option value="700">Bold (700)</option>
-                <option value="800">Extra Bold (800)</option>
-                <option value="900">Black (900)</option>
+                {FONT_WEIGHTS.map(weight => (
+                  <option key={weight.value} value={weight.value}>
+                    {weight.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -89,7 +83,7 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Font size (px)</label>
               <input 
                 type="number" 
-                value={selected.style?.fontSize || 16} 
+                value={selected.style?.fontSize || DEFAULTS.FONT_SIZE} 
                 onChange={(e)=>updateStyle({ fontSize: Number(e.target.value) })} 
               />
             </div>
@@ -98,7 +92,7 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Text color</label>
               <input 
                 type="color" 
-                value={selected.style?.color || '#111'} 
+                value={selected.style?.color || DEFAULTS.TEXT_COLOR} 
                 onChange={(e)=>updateStyle({ color: e.target.value })} 
               />
             </div>
@@ -106,12 +100,14 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
             <div className="property-group">
               <label>Text align</label>
               <select 
-                value={selected.style?.textAlign || 'left'} 
+                value={selected.style?.textAlign || DEFAULTS.TEXT_ALIGN} 
                 onChange={(e)=>updateStyle({ textAlign: e.target.value })}
               >
-                <option value="left">Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
+                {TEXT_ALIGNMENTS.map(alignment => (
+                  <option key={alignment.value} value={alignment.value}>
+                    {alignment.label}
+                  </option>
+                ))}
               </select>
             </div>
           </>
@@ -123,7 +119,7 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Background color</label>
               <input 
                 type="color" 
-                value={selected.style?.backgroundColor || '#2563eb'} 
+                value={selected.style?.backgroundColor || DEFAULTS.BUTTON_BACKGROUND} 
                 onChange={(e)=>updateStyle({ backgroundColor: e.target.value })} 
               />
             </div>
@@ -132,7 +128,7 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Border radius (px)</label>
               <input 
                 type="number" 
-                value={selected.style?.borderRadius || 8} 
+                value={selected.style?.borderRadius || DEFAULTS.BUTTON_BORDER_RADIUS} 
                 onChange={(e)=>updateStyle({ borderRadius: Number(e.target.value) })} 
               />
             </div>
@@ -141,9 +137,9 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Padding</label>
               <input 
                 type="text" 
-                value={selected.style?.padding || '8px 16px'} 
+                value={selected.style?.padding || DEFAULTS.BUTTON_PADDING} 
                 onChange={(e)=>updateStyle({ padding: e.target.value })} 
-                placeholder="8px 16px"
+                placeholder={DEFAULTS.BUTTON_PADDING}
               />
             </div>
           </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Toolbar from './components/Toolbar';
 import Canvas from './components/Canvas';
 import PropertiesPanel from './components/PropertiesPanel';
+import { loadElements, saveElements, loadCanvasBg, saveCanvasBg, clearAllData } from './utils/storage.js';
 
 
 const id = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
@@ -9,27 +10,17 @@ const id = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(
 const initialElements = []; 
 
 const App = () => {
-  const [elements, setElements] = useState(() => {
-    try {
-      const raw = localStorage.getItem('wysiwyg:elements');
-      return raw ? JSON.parse(raw) : initialElements;
-    } catch {
-      return initialElements;
-    }
-  });
-
+  const [elements, setElements] = useState(() => loadElements());
   const [selectedId, setSelectedId] = useState(null);
   const [mode, setMode] = useState('design'); // design | preview
-  const [canvasBg, setCanvasBg] = useState(() => {
-    return localStorage.getItem('wysiwyg:canvasBg') || '#ffffff';
-  });
+  const [canvasBg, setCanvasBg] = useState(() => loadCanvasBg());
 
   useEffect(() => {
-    localStorage.setItem('wysiwyg:elements', JSON.stringify(elements));
+    saveElements(elements);
   }, [elements]);
 
   useEffect(() => {
-    localStorage.setItem('wysiwyg:canvasBg', canvasBg);
+    saveCanvasBg(canvasBg);
   }, [canvasBg]);
 
   const addElement = (type, payload) => {
@@ -70,6 +61,7 @@ const App = () => {
   const clearAll = () => {
     setElements([]);
     setSelectedId(null);
+    clearAllData();
   };
 
   return (
@@ -86,7 +78,7 @@ const App = () => {
             {mode === 'design' ? '👁️ Preview' : '✏️ Back to Edit'}
           </button>
           <button 
-            onClick={() => { clearAll(); localStorage.removeItem('wysiwyg:elements'); }}
+            onClick={() => { clearAll(); }}
             className="header-btn danger"
           >
             🗑️ Clear

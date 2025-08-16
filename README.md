@@ -1,149 +1,92 @@
-# Component Builder - MVP
+# Component Builder
 
-A simple drag and drop component editor for creating web designs with real-time preview.
+A drag-and-drop WYSIWYG editor for creating web designs with real-time preview.
 
-## 🚀 Features
+## What It Does
 
-### Core Functionality
-- **Drag & Drop Interface**: Intuitive component placement and positioning
-- **Real-time Preview**: Switch between design and preview modes instantly
-- **Auto-save**: Your work is automatically saved to local storage
-- **Simple Interface**: Clean and focused user experience
+- **Drag & Drop**: Place text, images, and buttons on a canvas
+- **Real-time Editing**: Click text/buttons to edit content directly
+- **Styling Controls**: Customize fonts, colors, sizes via properties panel
+- **Preview Mode**: Switch between design and preview instantly
+- **Auto-save**: Work is automatically saved to localStorage
 
-### Component Library
-- **Text**: Editable text elements with styling options
-- **Image**: Image display with file upload
-- **Button**: Interactive button components
+## How to Use
 
-### Styling Options
-- **Typography**: Font size, color, alignment
-- **Layout**: Width and height customization
-- **Colors**: Text and background colors
-- **Canvas Settings**: Background color customization
+1. **Add Elements**: Click component buttons in left sidebar
+2. **Position**: Drag elements around the canvas
+3. **Edit Content**: Click on text/button elements to edit
+4. **Style**: Select element → use right panel to customize
+5. **Preview**: Toggle preview mode to see final design
 
-## 🎯 Getting Started
+## Tech Stack
 
-### Prerequisites
-- Node.js (version 16 or higher)
-- npm or yarn package manager
+- **React 19** - UI framework
+- **@dnd-kit** - Drag and drop functionality
+- **Vite** - Build tool
+- **LocalStorage** - Data persistence
 
-### Installation
+## Folder Structure
 
-1. **Clone or download the project**
-   ```bash
-   git clone <repository-url>
-   cd my-react-app
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser**
-   Navigate to `http://localhost:5173` to start using the editor
-
-## 🎨 How to Use
-
-### Adding Components
-1. **Browse the component library** on the left sidebar
-2. **Click on any component** to add it to your canvas
-3. **Drag the component** to position it where you want
-
-### Editing Components
-1. **Select a component** by clicking on it
-2. **Use the properties panel** on the right to customize:
-   - **Font size**: Adjust text size
-   - **Colors**: Change text and background colors
-   - **Alignment**: Set text alignment
-   - **Dimensions**: Modify width and height
-3. **Click text elements** to edit content directly
-
-### Canvas Management
-- **Change background color** in the properties panel when no element is selected
-- **Switch to preview mode** to see your design without editing controls
-
-### Saving and Loading
-- **Auto-save**: Your work is automatically saved to local storage
-- **Clear**: Use the "Clear" button to reset your design
-
-## 🛠️ Technical Details
-
-### Built With
-- **React 19** - Modern React with hooks
-- **Vite** - Fast build tool and dev server
-- **CSS Grid & Flexbox** - Modern layout system
-- **Local Storage** - Persistent data storage
-
-### Project Structure
 ```
 src/
 ├── components/
-│   ├── Canvas.jsx          # Main canvas with drag functionality
-│   ├── Element.jsx         # Individual component renderer
+│   ├── elements/           # Individual element components
+│   │   ├── TextElement.jsx
+│   │   ├── ImageElement.jsx
+│   │   ├── ButtonElement.jsx
+│   │   └── index.js
+│   ├── Canvas.jsx          # Main canvas with drag-drop
+│   ├── Container.jsx       # Wrapper for draggable elements
+│   ├── Element.jsx         # Element type router
 │   ├── PropertiesPanel.jsx # Styling controls
 │   └── Toolbar.jsx         # Component library
-├── App.jsx                 # Main application component
-├── index.css              # Global styles and variables
-└── main.jsx               # Application entry point
+├── utils/
+│   ├── constants.js        # App constants & defaults
+│   └── storage.js          # LocalStorage utilities
+├── App.jsx                 # Main app component
+└── main.jsx               # Entry point
 ```
 
-### Component Types Supported
-- **Text**: Editable text with rich styling
-- **Image**: Image display with file upload
-- **Button**: Interactive button components
+## Component Usage
 
-## 🎨 Design System
+### App.jsx
+- **State Management**: Elements, selection, mode, canvas background
+- **Element Operations**: Add, update, remove elements
+- **Data Persistence**: Auto-save to localStorage
 
-### Color Palette
-- **Primary**: #2563eb (Blue)
-- **Danger**: #ef4444 (Red)
-- **Neutral**: Various grays for text and borders
+### Canvas.jsx
+- **Drag & Drop**: Handles element positioning with @dnd-kit
+- **Grid Snapping**: 10px grid alignment in design mode
+- **Boundary Constraints**: Elements stay within canvas bounds
 
-### Typography
-- **Font Family**: Inter, system fonts
-- **Font Sizes**: Configurable range
-- **Font Colors**: Customizable
+### Container.jsx
+- **Element Wrapper**: Provides drag functionality and selection
+- **Visual Feedback**: Shows dotted borders (unselected) / solid borders (selected)
+- **Text Editing Coordination**: Disables drag during text editing
 
-### Spacing
-- **Grid**: 10px snap grid for precise positioning
-- **Canvas**: Fixed 900x640px canvas size
+### Element.jsx
+- **Type Router**: Switch case to render different element types
+- **Scalable**: Easy to add new element types
 
-## 🚀 Deployment
+### Element Components (TextElement, ImageElement, ButtonElement)
+- **Specialized Rendering**: Each handles its specific functionality
+- **Inline Editing**: Text/button elements support contentEditable
+- **Styling**: Apply user-defined styles and defaults
 
-### Build for Production
+### PropertiesPanel.jsx
+- **Dynamic Controls**: Shows different options based on selected element
+- **Real-time Updates**: Changes apply immediately
+- **Constants Usage**: Uses centralized constants for options
+
+### Toolbar.jsx
+- **Component Library**: Buttons to add new elements
+- **File Upload**: Hidden input for image selection
+
+## Quick Start
+
 ```bash
-npm run build
+npm install
+npm run dev
 ```
 
-### Preview Production Build
-```bash
-npm run preview
-```
-
-### Deploy Options
-- **Netlify**: Drag and drop the `dist` folder
-- **Vercel**: Connect your repository for automatic deployment
-- **GitHub Pages**: Configure for static hosting
-- **Any static host**: Upload the `dist` folder contents
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-1. Check the browser console for errors
-2. Ensure all dependencies are installed
-3. Try clearing your browser's local storage
-4. Create an issue with detailed steps to reproduce
-
----
-
-**Happy Designing! 🎨✨**
+Open `http://localhost:5173` and start building!
