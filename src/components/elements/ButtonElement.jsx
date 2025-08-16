@@ -1,70 +1,45 @@
 import React, { useRef, useState } from 'react';
-import { DEFAULTS, ELEMENT } from '../../utils/constants';
+import { DEFAULTS, ELEMENT, MODES } from '../../utils/constants';
 
 const ButtonElement = ({ el, selected, updateElement, mode, onEditingStart, onEditingEnd }) => {
-  const editableRef = useRef();
+  const editableRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Handle click to start editing
   const onTextClick = (e) => {
-    if (mode === 'design') {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsEditing(true);
-      onEditingStart?.();
-      setTimeout(() => {
-        if (editableRef.current) {
-          editableRef.current.focus();
-          // Place cursor at the end of text
-          const range = document.createRange();
-          const selection = window.getSelection();
-          range.selectNodeContents(editableRef.current);
-          range.collapse(false);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      }, 10);
-    }
+    if (mode !== 'design') return;
+    e.preventDefault();
+    e.stopPropagation();
   };
 
-  // Handle blur to stop editing and save content
-  const onBlur = (e) => {
+  const onFocus = () => {
+    if (mode !== 'design') return;
+    setIsEditing(true);
+    onEditingStart?.();
+  };
+
+  const onBlur = () => {
+    if (mode !== 'design') return;
     setIsEditing(false);
     onEditingEnd?.();
-    
-    let html = e.target.innerHTML.trim();
-    
-    // Handle empty content - use placeholder text
-    if (!html || html === '<br>' || html === '<div><br></div>') {
-      html = 'Button';
-    }
-    
-    updateElement(el.id, { content: html });
   };
 
-  // Handle key press for Enter to stop editing
   const onKeyDown = (e) => {
+    if (mode !== 'design') return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       editableRef.current?.blur();
     }
   };
 
-  // Handle focus to start editing
-  const onFocus = (e) => {
-    if (mode === 'design') {
-      setIsEditing(true);
-      onEditingStart?.();
-    }
-  };
-
   // Helper function to get display content
   const getDisplayContent = () => {
-    const content = el.content || '';
-    if (!content || content === '<br>' || content === '<div><br></div>') {
-      return 'Button';
+    console.log('Button content:', el.content, 'Type:', typeof el.content);
+    // Only show default if content property doesn't exist (new button)
+    // If content exists but is empty, show empty (user's choice)
+    if (el.content === undefined || el.content === null) {
+      return DEFAULTS.BUTTON_TEXT;
     }
-    return content;
+    return el.content;
   };
 
   const baseElementStyle = {
@@ -128,8 +103,9 @@ const ButtonElement = ({ el, selected, updateElement, mode, onEditingStart, onEd
           WebkitBoxOrient: 'vertical'
         })
       }}
-      dangerouslySetInnerHTML={{ __html: getDisplayContent() }}
-    />
+    >
+      {getDisplayContent()}
+    </div>
   );
 };
 

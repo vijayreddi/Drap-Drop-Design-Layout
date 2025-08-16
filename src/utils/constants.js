@@ -50,6 +50,7 @@ export const DEFAULTS = {
   BUTTON_COLOR: '#fff',
   BUTTON_BORDER_RADIUS: 8,
   BUTTON_PADDING: '12px 24px',
+  BUTTON_TEXT: 'Click Me!',
   IMAGE_BORDER_RADIUS: 6
 };
 

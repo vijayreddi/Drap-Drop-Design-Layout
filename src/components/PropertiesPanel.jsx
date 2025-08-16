@@ -119,9 +119,13 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Button text</label>
               <input 
                 type="text" 
-                value={selected.content || 'Button'} 
-                onChange={(e)=>updateElement(selected.id, { content: e.target.value })} 
-                placeholder="Enter button text"
+                value={selected.content || ''} 
+                onChange={(e) => {
+                  console.log('Button text input:', e.target.value);
+                  // Always set the content, even if empty
+                  updateElement(selected.id, { content: e.target.value });
+                }}
+                placeholder={DEFAULTS.BUTTON_TEXT}
               />
             </div>
 
@@ -138,8 +142,12 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
               <label>Border radius (px)</label>
               <input 
                 type="number" 
+                min="0"
                 value={selected.style?.borderRadius || DEFAULTS.BUTTON_BORDER_RADIUS} 
-                onChange={(e)=>updateStyle({ borderRadius: Number(e.target.value) })} 
+                onChange={(e) => {
+                  const value = e.target.value === '' ? DEFAULTS.BUTTON_BORDER_RADIUS : Number(e.target.value);
+                  updateStyle({ borderRadius: value });
+                }}
               />
             </div>
             

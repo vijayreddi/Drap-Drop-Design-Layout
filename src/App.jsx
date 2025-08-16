@@ -3,6 +3,7 @@ import Toolbar from './components/Toolbar';
 import Canvas from './components/Canvas';
 import PropertiesPanel from './components/PropertiesPanel';
 import { loadElements, saveElements, loadCanvasBg, saveCanvasBg, clearAllData } from './utils/storage.js';
+import { DEFAULTS } from './utils/constants';
 
 
 const id = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
@@ -24,29 +25,19 @@ const App = () => {
   }, [canvasBg]);
 
   const addElement = (type, payload) => {
-    const el = {
-      id: id(),
+    const newElement = {
+      id: Date.now().toString(),
       type,
-      x: payload?.x ?? 40,
-      y: payload?.y ?? 40,
-      width: payload?.width ?? 200,
+      x: 50,
+      y: 50,
+      width: payload?.width ?? (type === 'image' ? 300 : 200),
       height: payload?.height ?? (type === 'button' ? 50 : 60),
-      content: payload?.content ?? (type === 'text' ? 'Click to edit text' : type === 'button' ? 'Click to edit button' : ''),
-      src: payload?.src || '',
-      style: payload?.style || { 
-        fontSize: 16, 
-        color: '#111',
-        backgroundColor: type === 'button' ? '#2563eb' : 'transparent',
-        border: 'none',
-        borderRadius: type === 'button' ? '8px' : '0px',
-        padding: type === 'button' ? '8px 16px' : '8px',
-        margin: '0px',
-        boxShadow: 'none',
-        textAlign: 'left'
-      }
+      content: payload?.content ?? (type === 'button' ? DEFAULTS.BUTTON_TEXT : 'Text'),
+      src: payload?.src ?? 'https://via.placeholder.com/300x200',
+      style: payload?.style ?? {}
     };
-    setElements(prev => [...prev, el]);
-    setSelectedId(el.id);
+    setElements(prev => [...prev, newElement]);
+    setSelectedId(newElement.id);
   };
 
   const updateElement = (idToUpdate, patch) => {
