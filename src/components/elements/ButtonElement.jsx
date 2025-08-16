@@ -98,7 +98,7 @@ const ButtonElement = ({ el, selected, updateElement, mode, onEditingStart, onEd
     <div
       ref={editableRef}
       className="element"
-      contentEditable={mode === 'design'}
+      contentEditable={false} // Disable direct editing to prevent confusion
       suppressContentEditableWarning
       onClick={onTextClick}
       onFocus={onFocus}
@@ -110,7 +110,7 @@ const ButtonElement = ({ el, selected, updateElement, mode, onEditingStart, onEd
         padding: DEFAULTS.BUTTON_PADDING, // Default good padding for buttons
         borderRadius: el.style?.borderRadius || DEFAULTS.BUTTON_BORDER_RADIUS,
         textAlign: 'center',
-        cursor: mode === 'design' ? 'text' : 'pointer',
+        cursor: mode === 'design' ? 'default' : 'pointer', // Changed from 'text' to 'default'
         backgroundColor: el.style?.backgroundColor || DEFAULTS.BUTTON_BACKGROUND,
         color: el.style?.color || DEFAULTS.BUTTON_COLOR,
         display: 'inline-block',

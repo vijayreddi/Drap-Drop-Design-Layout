@@ -116,6 +116,16 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
         {selected.type === 'button' && (
           <>
             <div className="property-group">
+              <label>Button text</label>
+              <input 
+                type="text" 
+                value={selected.content || 'Button'} 
+                onChange={(e)=>updateElement(selected.id, { content: e.target.value })} 
+                placeholder="Enter button text"
+              />
+            </div>
+
+            <div className="property-group">
               <label>Background color</label>
               <input 
                 type="color" 
