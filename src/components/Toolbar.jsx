@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { FiType, FiImage, FiSquare, FiInfo } from 'react-icons/fi';
 
 /**
  * MVP Toolbar: Add text, image, button only
@@ -40,17 +41,17 @@ const Toolbar = ({ onAdd }) => {
 
       <div className="component-grid">
         <button className="component-item" onClick={addText} title="Text">
-          <span className="component-icon">📝</span>
+          <FiType className="component-icon" />
           <span className="component-name">Text</span>
         </button>
         
         <button className="component-item" onClick={onAddImageClick} title="Image">
-          <span className="component-icon">🖼️</span>
+          <FiImage className="component-icon" />
           <span className="component-name">Image</span>
         </button>
         
         <button className="component-item" onClick={addButton} title="Button">
-          <span className="component-icon">🔘</span>
+          <FiSquare className="component-icon" />
           <span className="component-name">Button</span>
         </button>
       </div>
@@ -58,7 +59,7 @@ const Toolbar = ({ onAdd }) => {
       <input ref={fileRef} type="file" accept="image/*" style={{display:'none'}} onChange={onFile} />
 
       <div className="toolbar-tips">
-        <h4>💡 Quick Tips</h4>
+        <h4><FiInfo /> Quick Tips</h4>
         <ul>
           <li>Click text elements to edit</li>
           <li>Drag elements to reposition</li>

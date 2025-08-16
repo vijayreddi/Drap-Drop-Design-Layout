@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FiEye, FiEdit3, FiTrash2, FiLayers, FiSettings, FiGrid } from 'react-icons/fi';
 import Toolbar from './components/Toolbar';
 import Canvas from './components/Canvas';
 import PropertiesPanel from './components/PropertiesPanel';
@@ -55,24 +56,46 @@ const App = () => {
     clearAllData();
   };
 
+  const switchMode = (newMode) => {
+    if (newMode === mode) return;
+    setMode(newMode);
+  };
+
   return (
     <div className="app">
       <header className="header">
         <div style={{display:'flex', gap:12, alignItems:'center'}}>
-          <h2 style={{margin:0}}>Component Builder</h2>
-          <div style={{color:'#666', fontSize:13}}>• MVP</div>
+          <div className="header-brand">
+            <FiGrid className="brand-icon" />
+            <h2 style={{margin:0}}>Component Builder</h2>
+          </div>
+          <div className="version-badge">MVP</div>
           {mode === 'preview' && <div className="previewBadge">Preview mode</div>}
         </div>
 
         <div style={{display:'flex', gap:8, alignItems:'center'}}>
-          <button onClick={() => setMode(prev => prev === 'design' ? 'preview' : 'design')}>
-            {mode === 'design' ? '👁️ Preview' : '✏️ Back to Edit'}
-          </button>
+          <div className="toggle-switch" data-mode={mode}>
+            <div 
+              className={`toggle-option ${mode === 'design' ? 'active' : ''}`}
+              onClick={() => switchMode('design')}
+            >
+              <FiEdit3 />
+              <span>Design</span>
+            </div>
+            <div 
+              className={`toggle-option ${mode === 'preview' ? 'active' : ''}`}
+              onClick={() => switchMode('preview')}
+            >
+              <FiEye />
+              <span>Preview</span>
+            </div>
+          </div>
           <button 
             onClick={() => { clearAll(); }}
             className="header-btn danger"
           >
-            🗑️ Clear
+            <FiTrash2 />
+            <span>Clear</span>
           </button>
         </div>
       </header>

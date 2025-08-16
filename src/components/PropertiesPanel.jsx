@@ -1,4 +1,5 @@
 import React from 'react';
+import { FiTrash2, FiSettings, FiImage } from 'react-icons/fi';
 import { 
   FONT_FAMILIES, 
   FONT_WEIGHTS, 
@@ -15,7 +16,10 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
   if (!selected) {
     return (
       <div className="properties">
-        <h3 style={{margin:0}}>Canvas Settings</h3>
+        <div className="properties-header">
+          <h3 style={{margin:0}}>Canvas Settings</h3>
+          <FiSettings className="element-type" />
+        </div>
         
         <div className="property-group">
           <label>Background color</label>
@@ -37,13 +41,16 @@ const PropertiesPanel = ({ selected, updateElement, removeElement, canvasBg, set
     <div className="properties">
       <div className="properties-header">
         <h3 style={{margin:0}}>Properties</h3>
-        <div className="element-type">{selected.type}</div>
+        <div className="element-type">
+          {selected.type === 'image' ? <FiImage /> : selected.type}
+        </div>
       </div>
 
       {/* Action Buttons */}
       <div className="action-buttons">
         <button onClick={()=>removeElement(selected.id)} className="action-btn danger">
-          🗑️ Delete
+          <FiTrash2 />
+          <span>Delete</span>
         </button>
       </div>
 
