@@ -39,7 +39,7 @@ const App = () => {
       x: payload?.x ?? 40,
       y: payload?.y ?? 40,
       width: payload?.width ?? 200,
-      height: payload?.height ?? 60,
+      height: payload?.height ?? (type === 'button' ? 50 : 60),
       content: payload?.content ?? (type === 'text' ? 'Click to edit text' : type === 'button' ? 'Click to edit button' : ''),
       src: payload?.src || '',
       style: payload?.style || { 
@@ -95,9 +95,11 @@ const App = () => {
       </header>
 
       <div className="container">
-        <aside className="sidebar">
-          <Toolbar onAdd={addElement} />
-        </aside>
+        {mode === 'design' && (
+          <aside className="sidebar">
+            <Toolbar onAdd={addElement} />
+          </aside>
+        )}
 
         <main className="main">
           <Canvas
@@ -111,16 +113,18 @@ const App = () => {
           />
         </main>
 
-        <aside className="rightpanel">
-          <PropertiesPanel
-            selected={elements.find(e => e.id === selectedId)}
-            updateElement={updateElement}
-            removeElement={removeElement}
-            canvasBg={canvasBg}
-            setCanvasBg={setCanvasBg}
-            mode={mode}
-          />
-        </aside>
+        {mode === 'design' && (
+          <aside className="rightpanel">
+            <PropertiesPanel
+              selected={elements.find(e => e.id === selectedId)}
+              updateElement={updateElement}
+              removeElement={removeElement}
+              canvasBg={canvasBg}
+              setCanvasBg={setCanvasBg}
+              mode={mode}
+            />
+          </aside>
+        )}
       </div>
     </div>
   );

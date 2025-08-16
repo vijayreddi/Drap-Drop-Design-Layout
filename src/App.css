@@ -48,6 +48,39 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
   overflow: hidden;
 }
 
+/* Text editing improvements */
+.element[contenteditable="true"] {
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.element[contenteditable="true"]:focus {
+  outline: 2px solid #2563eb !important;
+  outline-offset: 2px;
+  background: rgba(37, 99, 235, 0.02) !important;
+}
+
+.element[contenteditable="true"]:hover {
+  background: rgba(37, 99, 235, 0.02) !important;
+}
+
+/* Ensure proper text selection */
+.element[contenteditable="true"]::selection {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+.element[contenteditable="true"]::-moz-selection {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+/* Override cursor during drag operations */
+.element[contenteditable="true"]:active {
+  cursor: grabbing !important;
+}
+
 .preview-overlay {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.4);

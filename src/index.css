@@ -71,6 +71,16 @@ html,body,#root {
   overflow: hidden;
 }
 
+/* Preview mode - full width layout */
+.container:has(.main:only-child) {
+  justify-content: center;
+}
+
+.container:has(.main:only-child) .main {
+  max-width: 1200px;
+  width: 100%;
+}
+
 .sidebar {
   width: 280px;
   padding: 16px;
